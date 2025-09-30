@@ -1,4 +1,5 @@
 import express from 'express'
+import { createAtHome, getHomePage } from './controllers/home.controller'
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -7,9 +8,9 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello from Home page</h1>')
-})
+app.get('/', getHomePage)
+
+app.post('/', createAtHome)
 
 app.get('/about', (req, res) => {
   res.send('<h1>Hello from About page</h1>')
