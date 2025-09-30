@@ -1,0 +1,36 @@
+{
+  "name": "mike-bff",
+  "version": "1.0.0",
+  "description": "Учебный проект, на базе курса \"Node.js — бэкенд для фронтенда. От концепции до деплоя!\" Автор курса - Михаил Непомнящий Ссылка на курс https://stepik.org/course/233860/info",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "dev": "nodemon --exec ts-node src/app.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GarriGarrison/mike-bff.git"
+  },
+  "keywords": [
+    "BFF",
+    "NodeJS"
+  ],
+  "author": "Garrison",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GarriGarrison/mike-bff/issues"
+  },
+  "homepage": "https://github.com/GarriGarrison/mike-bff#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.6.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
