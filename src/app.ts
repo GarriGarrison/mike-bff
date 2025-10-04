@@ -1,4 +1,5 @@
 import express from 'express'
+import path from 'path'
 import { createAtHome, getHomePage } from './controllers/home'
 // import todosRouter from './routes/todos'
 import appRouter from './routes'
@@ -9,6 +10,8 @@ const port = process.env.PORT || 3000
 // Body parser
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+app.use(express.static(path.join(__dirname, '..', 'public')))
 
 //* Вариант 1
 // app.use(todosRouter)
