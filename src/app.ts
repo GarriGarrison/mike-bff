@@ -1,5 +1,6 @@
 import express from 'express'
 import path from 'path'
+import { errors } from 'celebrate'
 import { createAtHome, getHomePage } from './controllers/home'
 // import todosRouter from './routes/todos'
 import appRouter from './routes'
@@ -36,6 +37,8 @@ app.get('/about', (req, res) => {
 // app.all('*', (req, res) => {
 //   res.status(404).send('<h1>Nothing found!</h1>')
 // })
+
+app.use(errors())  // ошибки валидации, вызываем после всех роутов
 
 app.listen(port, () => {
   console.log(`Server has been started on port ${port}`)

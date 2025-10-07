@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/GarriGarrison/mike-bff#readme",
   "dependencies": {
+    "celebrate": "^15.0.3",
     "express": "^5.1.0"
   },
   "devDependencies": {
