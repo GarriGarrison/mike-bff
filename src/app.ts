@@ -1,13 +1,21 @@
 import express, { NextFunction, Request, Response } from 'express'
 import path from 'path'
 import { errors } from 'celebrate'
+import cors from 'cors'
 import { createAtHome, getHomePage } from './controllers/home'
 // import todosRouter from './routes/todos'
 import appRouter from './routes'
 import { errorHandler } from './middlewares/error-handler'
+import { customCors } from './middlewares/custom-cors'
 
 const app = express()
 const port = process.env.PORT || 3000
+
+// app.use(customCors)
+// app.use(cors()) // разрешить всем и вся (аналог *)
+app.use(cors({
+  origin: 'https://www.w3.org'
+}))
 
 // Body parser
 app.use(express.json())
