@@ -1,4 +1,5 @@
-import { Request, Response } from 'express'
+import type { NextFunction, Request, Response } from 'express'
+import { NotFoundError } from '../errors/not-found-error'
 
 const todos = [
   { id: 1, title: 'Learn Node.js', completed: false },
@@ -15,7 +16,8 @@ export const getTodoById = (req: Request, res: Response) => {
 
   const todo = todos.find((todo) => todo.id === id)
 
-  if (!todo) throw new Error('Nothing found')
+  // if (!todo) throw new Error('Nothing found')
+  if (!todo) throw new NotFoundError('Todo not found') // кастомная ошибка
 
   res.json(todo)
 }
@@ -30,13 +32,22 @@ export const createTodo = (req: Request, res: Response) => {
   res.status(201).json(newTodo)
 }
 
-export const updateTodo = (req: Request, res: Response) => {
+export const updateTodo = async (req: Request, res: Response, next:NextFunction) => {
   const id = Number(req.params.id)
   const updatedTodo = req.body
 
+  // fetch().then().catch(err => next(err))
+  // fetch().then().catch(next) // тоже самое что и строчкой выше
+  try {
+    new Error('')
+  } catch (error) {
+    next(error)
+  }
+
   const todoIndex = todos.findIndex((todo) => todo.id === id)
 
-  if (todoIndex < 0) throw new Error('Nothing found')
+  // if (todoIndex < 0) throw new Error('Nothing found')
+  if (todoIndex < 0) throw new NotFoundError('Todo not found') // кастомная ошибка
 
   todos[todoIndex] = updatedTodo
 
@@ -48,8 +59,9 @@ export const deleteTodo = (req: Request, res: Response) => {
 
   const todoIndex = todos.findIndex((todo) => todo.id === id)
 
-  if (todoIndex < 0) throw new Error('Nothing found')
-  
+  // if (todoIndex < 0) throw new Error('Nothing found')
+  if (todoIndex < 0) throw new NotFoundError('Todo not found') // кастомная ошибка
+
   todos.splice(todoIndex, 1)
 
   res.status(200).send()

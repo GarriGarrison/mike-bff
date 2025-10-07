@@ -1,9 +1,10 @@
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import path from 'path'
 import { errors } from 'celebrate'
 import { createAtHome, getHomePage } from './controllers/home'
 // import todosRouter from './routes/todos'
 import appRouter from './routes'
+import { errorHandler } from './middlewares/error-handler'
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -39,6 +40,8 @@ app.get('/about', (req, res) => {
 // })
 
 app.use(errors())  // ошибки валидации, вызываем после всех роутов
+
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`Server has been started on port ${port}`)
