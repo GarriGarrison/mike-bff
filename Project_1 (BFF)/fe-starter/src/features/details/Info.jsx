@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useNeighbors } from './use-neighbors';
+// import { useNeighbors } from './use-neighbors';
 
 const Wrapper = styled.section`
   margin-top: 3rem;
@@ -97,13 +97,14 @@ export const Info = (props) => {
     region,
     subregion,
     topLevelDomain,
+    neighbors,
     currencies = [],
     languages = [],
     borders = [],
     push,
   } = props;
 
-  const neighbors = useNeighbors(borders);
+  // const neighbors = useNeighbors(borders); //* Оптимизация запросов
 
   return (
     <Wrapper>
