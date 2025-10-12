@@ -3,6 +3,7 @@ import transformCountry from '../converters/transform-country';
 import { NotFoundError } from '../errors/not-found-error';
 import { BASE_URL } from '../constants/urls';
 import getNeighbors from '../services/get-neighbors';
+import transformAllCountries from '../converters/transform-all-contries';
 
 export const getAllCountries = async (req: Request, res: Response) => {
   const response = await fetch(
@@ -11,10 +12,17 @@ export const getAllCountries = async (req: Request, res: Response) => {
 
   const data = await response.json();
 
-  res.send(data);
+  // res.setHeader('Cache-Control', 'public, max-age=86400');
+  res
+    // .setHeader('Cache-Control', 'public, max-age=86400') // сделали middleware и кэшируем на уровне route
+    .send(transformAllCountries(data));
 };
 
-export const getCountryByName = async (req: Request, res: Response, next: NextFunction) => {
+export const getCountryByName = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const name = req.params.name;
 
   const response = await fetch(`${BASE_URL}name/${name}`);
