@@ -5,11 +5,12 @@ import {
   getCountryByName,
 } from '../controllers/countries';
 import publicCache from '../middlewares/public-cache';
+import cacheMiddleware from '../middlewares/cache-middleware';
 
 const router = Router();
 
-router.get('/', publicCache, getAllCountries);
-router.get('/name/:name', publicCache, getCountryByName);
+router.get('/', [publicCache, cacheMiddleware(300)], getAllCountries);
+router.get('/name/:name', [publicCache, cacheMiddleware(300)], getCountryByName);
 // router.get('/alpha', getCountriesByCode); // Убираем в рамках оптимизации
 
 export default router;

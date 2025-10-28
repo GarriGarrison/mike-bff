@@ -3,7 +3,8 @@ import transformCountry from '../converters/transform-country';
 import { NotFoundError } from '../errors/not-found-error';
 import { BASE_URL } from '../constants/urls';
 import getNeighbors from '../services/get-neighbors';
-import transformAllCountries from '../converters/transform-all-contries';
+import transformAllCountries from '../converters/transform-all-countries';
+import { cacheResponse } from '../redis/redis-utils';
 
 export const getAllCountries = async (req: Request, res: Response) => {
   const response = await fetch(
@@ -11,11 +12,14 @@ export const getAllCountries = async (req: Request, res: Response) => {
   );
 
   const data = await response.json();
+  const countries = transformAllCountries(data);
 
+  await cacheResponse(res, countries);
   // res.setHeader('Cache-Control', 'public, max-age=86400');
   res
     // .setHeader('Cache-Control', 'public, max-age=86400') // сделали middleware и кэшируем на уровне route
-    .send(transformAllCountries(data));
+    // .send(transformAllCountries(data));
+    .send(countries);
 };
 
 export const getCountryByName = async (
@@ -44,6 +48,7 @@ export const getCountryByName = async (
   const preparedCountry = transformCountry(country) as any;
   preparedCountry.neighbors = neighbors;
 
+  await cacheResponse(res, preparedCountry);
   res.send(preparedCountry);
 };
 
